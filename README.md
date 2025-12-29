@@ -58,7 +58,6 @@ plagiarism-checker/
 ├── css/
 │ └── style.css # Styling, layout, and responsiveness
 ├── js/
-│ ├── data.js # Sample text data & helper functions
 │ ├── analyzer.js # Similarity computation and detection algorithms
 │ ├── algorithm.js # Text processing utilities
 │ └── main.js # DOM events, input handling, report generation
