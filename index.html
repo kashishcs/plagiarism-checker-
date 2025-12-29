@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plagiarism Checker - Multi-Algorithm Detection</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="brand-logo">📋</div>
+        <div class="brand-text">
+          <h1>Advanced Plagiarism Detector</h1>
+          <p>Multi-Algorithm Similarity Analysis System</p>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span class="status-dot"></span>
+        <span>5 Algorithms Active</span>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <section class="card">
+        <div class="card-header">
+          <h2>📝 Text Input</h2>
+          <div class="info-pill">Original vs Check</div>
+        </div>
+
+        <div class="text-inputs">
+          <div class="input-group">
+            <label>
+              <span>Original Text (Reference)</span>
+              <span class="char-count" id="originalCount">0 chars</span>
+            </label>
+            <textarea id="originalText" placeholder="Paste the original/reference text here..."></textarea>
+          </div>
+
+          <div class="input-group">
+            <label>
+              <span>Text to Check (Student Work)</span>
+              <span class="char-count" id="checkCount">0 chars</span>
+            </label>
+            <textarea id="checkText" placeholder="Paste the text you want to check for plagiarism..."></textarea>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-secondary" id="swapBtn">🔄 Swap Texts</button>
+          <button class="btn btn-secondary" id="clearBtn">🗑️ Clear All</button>
+          <button class="btn btn-primary" id="analyzeBtn">🚀 Analyze Plagiarism</button>
+        </div>
+
+        <div class="web-check-section">
+          <div class="web-check-header">
+            <h3>🌐 Online Source Checking</h3>
+            <label class="toggle">
+              <input type="checkbox" id="webCheckToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <p class="web-check-info">Enable to simulate checking against web sources (Demo mode)</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>📊 Analysis Results</h2>
+          <div class="algorithm-count" id="algorithmCount">0/5 completed</div>
+        </div>
+
+        <div class="score-display">
+          <div class="main-score">
+            <div class="score-circle">
+              <svg viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="54" class="circle-bg"></circle>
+                <circle cx="60" cy="60" r="54" class="circle-progress" id="circleProgress"></circle>
+              </svg>
+              <div class="score-text">
+                <span class="score-value" id="mainScore">0</span>
+                <span class="score-unit">%</span>
+              </div>
+            </div>
+            <div class="score-label" id="scoreLabel">Awaiting Analysis</div>
+          </div>
+
+          <div class="algorithm-results">
+            <div class="algo-card">
+              <div class="algo-icon">📐</div>
+              <div class="algo-info">
+                <span class="algo-name">Cosine Similarity</span>
+                <span class="algo-score" id="score-cosine">--</span>
+              </div>
+            </div>
+            <div class="algo-card">
+              <div class="algo-icon">🎯</div>
+              <div class="algo-info">
+                <span class="algo-name">Jaccard Index</span>
+                <span class="algo-score" id="score-jaccard">--</span>
+              </div>
+            </div>
+            <div class="algo-card">
+              <div class="algo-icon">📏</div>
+              <div class="algo-info">
+                <span class="algo-name">Levenshtein Distance</span>
+                <span class="algo-score" id="score-levenshtein">--</span>
+              </div>
+            </div>
+            <div class="algo-card">
+              <div class="algo-icon">🎲</div>
+              <div class="algo-info">
+                <span class="algo-name">Dice Coefficient</span>
+                <span class="algo-score" id="score-dice">--</span>
+              </div>
+            </div>
+            <div class="algo-card">
+              <div class="algo-icon">🔗</div>
+              <div class="algo-info">
+                <span class="algo-name">Word Overlap</span>
+                <span class="algo-score" id="score-overlap">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-section">
+          <div class="detail-card">
+            <h3>🔍 Algorithm Breakdown</h3>
+            <div class="breakdown-content" id="breakdownContent">
+              <p class="placeholder">Run analysis to see detailed breakdown</p>
+            </div>
+          </div>
+          
+          <div class="detail-card" id="webResultsCard" style="display: none;">
+            <h3>🌐 Web Sources Found</h3>
+            <div class="web-results" id="webResults"></div>
+          </div>
+          
+          <div class="detail-card">
+            <h3>✨ Highlighted Matches</h3>
+            <div class="highlights" id="highlights">
+              <p class="placeholder">Matching words will appear here</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>💡 <strong>For CS Project:</strong> Uses 5 algorithms - Cosine Similarity, Jaccard Index, Levenshtein Distance, Dice Coefficient, and Word Overlap</p>
+      <p class="hotkey">Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to analyze</p>
+    </footer>
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Analyzing with multiple algorithms...</p>
+  </div>
+
+  <script src="js/algorithm.js"></script>
+  <script src="js/analyser.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
